@@ -1,32 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import { useSearchParams } from 'react-router-dom';
 import { Info } from '../../components';
 import { References } from '../../services/references';
-import { Card, Container, Content, Title, Wrapper } from './Styles';
+import { Card, Container, Content, Input, SendButton, Title, Wrapper } from './Styles';
+import Select from 'react-select';
+
+const options = [
+  { value: 'id', label: 'By Id' }
+  // { value: 'sample', label: 'By sample' }
+];
 
 export const Home = (props: any) => {
   const [data, setData] = useState<any>({});
-  let [searchParams] = useSearchParams();
+  const [value, setValue] = useState<any>();
 
   const { testSession, dco, athlete, discipline, sport, ar, uar, dcor, aar, samples, psrs } = data;
 
   const getTestSessionById = async () => {
-    const tsId = searchParams.get('tsId');
-    if (tsId) {
-      const results = await References.getTestSession(tsId);
+    if (value) {
+      const results = await References.getTestSession(value);
       console.log('DATA: ', results);
       setData(results);
+    } else {
+      alert('Add a value into the field');
     }
   };
-
-  useEffect(() => {
-    getTestSessionById();
-  }, []);
 
   return (
     <Container>
       <Grid fluid>
+        <Row center="md">
+          <Col xs={10} md={2}>
+            <Input onChange={(event) => setValue(event?.target?.value)} />
+          </Col>
+          <Col xs={10} md={2}>
+            <Select defaultValue={{ value: 'id', label: 'By Id' }} options={options} />
+          </Col>
+          <Col xs={10} md={1}>
+            <SendButton onClick={getTestSessionById}>Send</SendButton>
+          </Col>
+        </Row>
+
+        <br />
+
         <Row center="md">
           {testSession && (
             <Col xs={12} md={8}>

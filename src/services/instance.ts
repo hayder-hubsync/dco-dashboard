@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Constants } from '../utils';
 
 const instance = axios.create({
-  baseURL: Constants.Stages.development,
+  baseURL: Constants.Stages.uat,
   timeout: 30000
 });
 
