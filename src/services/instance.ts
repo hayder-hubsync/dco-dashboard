@@ -6,16 +6,6 @@ const instance = axios.create({
   timeout: 30000
 });
 
-// instance.interceptors.response.use(
-//   response => response,
-//   function (error) {
-//     if (error?.response?.status === 401) {
-//       store.dispatch(Actions.logOut());
-//     }
-//     return Promise.reject(error.response);
-//   },
-// );
-
 instance.interceptors.response.use(
   (response) => {
     return Promise.resolve(response.data);
