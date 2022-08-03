@@ -35,7 +35,11 @@ export const Home = (props: any) => {
                   <Card>
                     <Title title={testSession?.funcName}>Test Session</Title>
                     <Content>
-                      <Info name="DCO" value={`${dco?.fName} ${dco?.lName}`} />
+                      <Info
+                        name="DCO"
+                        copy={testSession?.lockedBy}
+                        value={`${dco?.fName} ${dco?.lName}`}
+                      />
                       <Info name="Email" value={`${athlete?.email}`} />
                       <Info name="Status" label="true" value={`${testSession?.status}`} />
                       <Info name="Type" label="true" value={testSession?.tsType} />
@@ -47,10 +51,33 @@ export const Home = (props: any) => {
                         name="Window start"
                         value={`${testSession?.wStart?.substring(0, 10)}`}
                       />
-                      <Info name="AR status" label="true" value={ar?.status} />
-                      {uar && <Info name="UAR status" label="true" value={`${uar?.status}`} />}
-                      <Info name="DCOR status" label="true" value={`${dcor?.status}`} />
-                      <Info name="AAR status" label="true" value={`${aar?.status}`} />
+                      <Info
+                        name="AR status"
+                        copy={testSession?.arId}
+                        label="true"
+                        value={ar?.status}
+                      />
+                      {uar && (
+                        <Info
+                          name="UAR status"
+                          copy={testSession?.uarId}
+                          label="true"
+                          value={`${uar?.status}`}
+                        />
+                      )}
+                      <Info
+                        name="DCOR status"
+                        copy={testSession?.dcorId}
+                        label="true"
+                        value={`${dcor?.status}`}
+                      />
+
+                      <Info
+                        name="AAR status"
+                        copy={testSession?.aarId}
+                        label="true"
+                        value={`${aar?.status}`}
+                      />
                     </Content>
                   </Card>
                 </Col>
@@ -63,10 +90,15 @@ export const Home = (props: any) => {
                         {samples.map((item: any) => {
                           return (
                             <Wrapper key={item?.sample?.code?.toString()}>
-                              <Info name="Code" value={item?.sample?.code?.toString()} />
+                              <Info
+                                name="Code"
+                                copy={item?.sample?.code}
+                                value={item?.sample?.code?.toString()}
+                              />
                               <Info name="Status" label="true" value={item?.sample?.status} />
                               <Info
                                 name="Manifest Status"
+                                copy={item?.sample?.manifestId}
                                 label="true"
                                 value={item?.sample?.status}
                               />

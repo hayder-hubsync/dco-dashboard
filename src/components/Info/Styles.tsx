@@ -29,3 +29,12 @@ export const Value = styled.div<{ label?: any }>`
     }
   }}
 `;
+
+export const Copy = styled.button`
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  &:active {
+    background-color: #f7f7f7;
+  }
+`;
