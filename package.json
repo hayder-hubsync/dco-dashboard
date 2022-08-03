@@ -19,7 +19,6 @@
     "react-flexbox-grid": "^2.1.2",
     "react-icons": "^4.4.0",
     "react-loading-skeleton": "^3.1.0",
-    "react-router-dom": "6",
     "react-scripts": "5.0.1",
     "react-select": "^5.4.0",
     "styled-components": "^5.3.5",
