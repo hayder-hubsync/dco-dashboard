@@ -106,18 +106,21 @@ export const Home = (props: any) => {
                         {samples.map((item: any) => {
                           return (
                             <Wrapper key={item?.sample?.code?.toString()}>
+                              <Info name="Type" value={item?.sample?.type?.toString()} />
                               <Info
                                 name="Code"
                                 copy={item?.sample?.code}
                                 value={item?.sample?.code?.toString()}
                               />
                               <Info name="Status" label="true" value={item?.sample?.status} />
-                              <Info
-                                name="Manifest Status"
-                                copy={item?.sample?.manifestId}
-                                label="true"
-                                value={item?.sample?.status}
-                              />
+                              {!!item?.sample?.manifestId && (
+                                <Info
+                                  name="Manifest Status"
+                                  copy={item?.sample?.manifestId}
+                                  label="true"
+                                  value={item?.manifest?.status}
+                                />
+                              )}
                             </Wrapper>
                           );
                         })}
