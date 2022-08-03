@@ -98,7 +98,7 @@ export const Home = (props: any) => {
                   </Card>
                 </Col>
 
-                {samples?.length && (
+                {!!samples?.length && (
                   <Col xs={12} sm={6} lg={4}>
                     <Card>
                       <Title>DCOR Samples</Title>
@@ -126,24 +126,26 @@ export const Home = (props: any) => {
                   </Col>
                 )}
 
-                <Col xs={12} sm={6} lg={4}>
-                  <Card>
-                    <Title>Post-Supplemental Report (PSR)</Title>
-                    <Content>
-                      {psrs.map((item: any) => {
-                        return (
-                          <Wrapper key={item?.psr?.createdOn}>
-                            <Info
-                              name="Created on"
-                              value={item?.psr?.createdOn?.substring(0, 10)}
-                            />
-                            <Info name="Status" label="true" value={item?.psr?.status} />
-                          </Wrapper>
-                        );
-                      })}
-                    </Content>
-                  </Card>
-                </Col>
+                {!!psrs?.length && (
+                  <Col xs={12} sm={6} lg={4}>
+                    <Card>
+                      <Title>Post-Supplemental Report (PSR)</Title>
+                      <Content>
+                        {psrs.map((item: any) => {
+                          return (
+                            <Wrapper key={item?.psr?.createdOn}>
+                              <Info
+                                name="Created on"
+                                value={item?.psr?.createdOn?.substring(0, 10)}
+                              />
+                              <Info name="Status" label="true" value={item?.psr?.status} />
+                            </Wrapper>
+                          );
+                        })}
+                      </Content>
+                    </Card>
+                  </Col>
+                )}
               </Row>
             </Col>
           )}
