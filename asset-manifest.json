@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "/dco-dashboard/static/css/main.073c9b0a.css",
-    "main.js": "/dco-dashboard/static/js/main.cfcb6206.js",
+    "main.css": "/dco-dashboard/static/css/main.3c7c5dd7.css",
+    "main.js": "/dco-dashboard/static/js/main.8595c383.js",
     "static/js/787.e941a226.chunk.js": "/dco-dashboard/static/js/787.e941a226.chunk.js",
-    "static/media/logo.svg": "/dco-dashboard/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/dco-dashboard/index.html",
-    "main.073c9b0a.css.map": "/dco-dashboard/static/css/main.073c9b0a.css.map",
-    "main.cfcb6206.js.map": "/dco-dashboard/static/js/main.cfcb6206.js.map",
+    "main.3c7c5dd7.css.map": "/dco-dashboard/static/css/main.3c7c5dd7.css.map",
+    "main.8595c383.js.map": "/dco-dashboard/static/js/main.8595c383.js.map",
     "787.e941a226.chunk.js.map": "/dco-dashboard/static/js/787.e941a226.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.cfcb6206.js"
+    "static/css/main.3c7c5dd7.css",
+    "static/js/main.8595c383.js"
   ]
 }
