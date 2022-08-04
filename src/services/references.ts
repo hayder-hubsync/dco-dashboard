@@ -3,8 +3,8 @@ import instance from './instance';
 class Refereces {
   baseUrl = 'references';
 
-  getTestSession(tsId: string) {
-    return instance.get(`${this.baseUrl}/test-session-by-id?id=${tsId}`);
+  getTestSession(value: string, type: string) {
+    return instance.get(`${this.baseUrl}/test-session?value=${value}&type=${type}`);
   }
 }
 

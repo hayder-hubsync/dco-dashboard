@@ -6,20 +6,20 @@ import { Card, Container, Content, Input, SendButton, Title, Wrapper } from './S
 import Select from 'react-select';
 
 const options = [
-  { value: 'id', label: 'By Id' }
-  // { value: 'sample', label: 'By sample' }
+  { value: 'id', label: 'By Id' },
+  { value: 'sample', label: 'By sample' }
 ];
 
 export const Home = (props: any) => {
   const [data, setData] = useState<any>({});
   const [value, setValue] = useState<any>();
+  const [type, setType] = useState<any>({});
 
   const { testSession, dco, athlete, discipline, sport, ar, uar, dcor, aar, samples, psrs } = data;
 
   const getTestSessionById = async () => {
     if (value) {
-      const results = await References.getTestSession(value);
-      console.log('DATA: ', results);
+      const results = await References.getTestSession(value, type?.value);
       setData(results);
     } else {
       alert('Add a value into the field');
@@ -34,7 +34,11 @@ export const Home = (props: any) => {
             <Input onChange={(event) => setValue(event?.target?.value)} />
           </Col>
           <Col xs={10} md={2}>
-            <Select defaultValue={{ value: 'id', label: 'By Id' }} options={options} />
+            <Select
+              onChange={setType}
+              defaultValue={{ value: 'id', label: 'By Id' }}
+              options={options}
+            />
           </Col>
           <Col xs={10} md={1}>
             <SendButton onClick={getTestSessionById}>Send</SendButton>
