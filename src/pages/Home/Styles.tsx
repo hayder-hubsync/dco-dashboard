@@ -21,7 +21,6 @@ export const Wrapper = styled.div`
 
 export const Indicator = styled.div<{ color: string }>`
   background-color: ${({ color }) => color || 'grey'};
-  height: 70px;
   border-radius: 8px;
   padding: 10px;
   align-items: center;
@@ -30,9 +29,18 @@ export const Indicator = styled.div<{ color: string }>`
   flex-direction: column;
 `;
 
-export const IndicatorText = styled.p`
+export const IndicatorCount = styled.h4`
+  color: #fff;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+`;
+
+export const IndicatorText = styled.span`
   color: #fff;
   font-weight: bold;
   font-size: 14px;
   text-align: center;
+  margin: 0;
+  padding: 0;
 `;

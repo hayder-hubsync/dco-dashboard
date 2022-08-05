@@ -1,31 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Info } from '../../components';
 import { References } from '../../services/references';
-import { Indicator, IndicatorText, StyledCard, Title, Wrapper } from './Styles';
+import { Indicator, IndicatorCount, IndicatorText, StyledCard, Title, Wrapper } from './Styles';
 import { Button, Container, Form, Row, Col } from 'react-bootstrap';
-import { FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
 import { Constants } from '../../utils';
 
 export const Home = () => {
   const [data, setData] = useState<any>({});
   const [value, setValue] = useState<any>();
   const [type, setType] = useState<any>({});
-  const [cbStatus, setCBStatus] = useState<any>('default');
 
-  const { testSession, dco, athlete, discipline, sport, ar, uar, dcor, aar, samples, psrs } = data;
-
-  useEffect(() => {
-    checkCouchBase();
-  }, []);
-
-  const checkCouchBase = async () => {
-    const result = await References.checkCBStatus();
-    setCBStatus(result ? 'success' : 'danger');
-  };
+  const {
+    testSession,
+    dco,
+    athlete,
+    discipline,
+    sport,
+    ar,
+    uar,
+    dcor,
+    aar,
+    samples,
+    psrs,
+    submitted
+  } = data;
 
   const getTestSessionById = async () => {
     if (value) {
       const results = await References.getTestSession(value, type);
+      console.log('DATA:', results);
       setData(results);
     } else {
       alert('Add a value into the field');
@@ -57,26 +60,13 @@ export const Home = () => {
         </Col>
       </Row>
 
-      <Row>
-        <Col>
+      <Row className="mt-3">
+        <Col md={2}>
           <Indicator color={Constants.Colors.success}>
-            <div>
-              {cbStatus === 'success' && <FiCheckCircle size={20} color="#fff" />}
-              {cbStatus === 'danger' && <FiAlertCircle size={20} color="#fff" />}
-            </div>
-            <IndicatorText>CouchBase</IndicatorText>
+            <IndicatorCount>{submitted?.length}</IndicatorCount>
+            <IndicatorText>Submited</IndicatorText>
           </Indicator>
         </Col>
-        <Col></Col>
-        <Col></Col>
-        <Col></Col>
-        <Col></Col>
-        <Col></Col>
-        <Col></Col>
-        <Col></Col>
-        <Col></Col>
-        <Col></Col>
-        <Col></Col>
       </Row>
 
       <Row className="mt-4">
@@ -85,7 +75,7 @@ export const Home = () => {
             <Title title={testSession?.funcName}>Test Session</Title>
             <StyledCard.Body>
               {testSession && (
-                <StyledCard.Text>
+                <>
                   <Info
                     name="DCO"
                     copy={testSession?.lockedBy}
@@ -121,7 +111,7 @@ export const Home = () => {
                     label="true"
                     value={`${aar?.status}`}
                   />
-                </StyledCard.Text>
+                </>
               )}
             </StyledCard.Body>
           </StyledCard>
@@ -131,7 +121,7 @@ export const Home = () => {
           <StyledCard>
             <Title title={testSession?.funcName}>DCOR Samples</Title>
             <StyledCard.Body>
-              <StyledCard.Text>
+              <>
                 {samples?.map((item: any) => {
                   return (
                     <Wrapper key={item?.sample?.code?.toString()}>
@@ -153,7 +143,7 @@ export const Home = () => {
                     </Wrapper>
                   );
                 })}
-              </StyledCard.Text>
+              </>
             </StyledCard.Body>
           </StyledCard>
         </Col>
@@ -162,7 +152,7 @@ export const Home = () => {
           <StyledCard>
             <Title title={testSession?.funcName}>Post-Supplemental Report (PSR)</Title>
             <StyledCard.Body>
-              <StyledCard.Text>
+              <>
                 {psrs?.map((item: any) => {
                   return (
                     <Wrapper key={item?.psr?.createdOn}>
@@ -171,7 +161,7 @@ export const Home = () => {
                     </Wrapper>
                   );
                 })}
-              </StyledCard.Text>
+              </>
             </StyledCard.Body>
           </StyledCard>
         </Col>

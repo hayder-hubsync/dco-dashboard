@@ -5,8 +5,9 @@ export const Constants = {
     production: 'https://dcoapi.usada.org/'
   },
   Colors: {
-    success: '#26be88',
+    success: '#28a745',
     purple: '#bf82ff',
-    orange: '#ff7f5d'
+    orange: '#ff7f5d',
+    red: '#dc3545'
   }
 };
