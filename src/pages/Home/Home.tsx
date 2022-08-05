@@ -90,7 +90,7 @@ export const Home = () => {
                   <Info name="Window end" value={`${testSession?.wEnd?.substring(0, 10)}`} />
                   <Info name="Window start" value={`${testSession?.wStart?.substring(0, 10)}`} />
                   <Info name="AR status" copy={testSession?.arId} label="true" value={ar?.status} />
-                  {uar && (
+                  {!!uar && (
                     <Info
                       name="UAR status"
                       copy={testSession?.uarId}
@@ -98,19 +98,23 @@ export const Home = () => {
                       value={`${uar?.status}`}
                     />
                   )}
-                  <Info
-                    name="DCOR status"
-                    copy={testSession?.dcorId}
-                    label="true"
-                    value={`${dcor?.status}`}
-                  />
+                  {!!dcor && (
+                    <Info
+                      name="DCOR status"
+                      copy={testSession?.dcorId}
+                      label="true"
+                      value={`${dcor?.status}`}
+                    />
+                  )}
 
-                  <Info
-                    name="AAR status"
-                    copy={testSession?.aarId}
-                    label="true"
-                    value={`${aar?.status}`}
-                  />
+                  {!!aar && (
+                    <Info
+                      name="AAR status"
+                      copy={testSession?.aarId}
+                      label="true"
+                      value={`${aar?.status}`}
+                    />
+                  )}
                 </>
               )}
             </StyledCard.Body>
