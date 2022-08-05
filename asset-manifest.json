@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/dco-dashboard/static/css/main.3c7c5dd7.css",
-    "main.js": "/dco-dashboard/static/js/main.fca5101f.js",
+    "main.css": "/dco-dashboard/static/css/main.b96a86a1.css",
+    "main.js": "/dco-dashboard/static/js/main.49b17db3.js",
     "static/js/787.e941a226.chunk.js": "/dco-dashboard/static/js/787.e941a226.chunk.js",
     "index.html": "/dco-dashboard/index.html",
-    "main.3c7c5dd7.css.map": "/dco-dashboard/static/css/main.3c7c5dd7.css.map",
-    "main.fca5101f.js.map": "/dco-dashboard/static/js/main.fca5101f.js.map",
+    "main.b96a86a1.css.map": "/dco-dashboard/static/css/main.b96a86a1.css.map",
+    "main.49b17db3.js.map": "/dco-dashboard/static/js/main.49b17db3.js.map",
     "787.e941a226.chunk.js.map": "/dco-dashboard/static/js/787.e941a226.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3c7c5dd7.css",
-    "static/js/main.fca5101f.js"
+    "static/css/main.b96a86a1.css",
+    "static/js/main.49b17db3.js"
   ]
 }
