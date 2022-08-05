@@ -1,25 +1,31 @@
-import React, { useState } from 'react';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import React, { useEffect, useState } from 'react';
 import { Info } from '../../components';
 import { References } from '../../services/references';
-import { Card, Container, Content, Input, SendButton, Title, Wrapper } from './Styles';
-import Select from 'react-select';
+import { Indicator, IndicatorText, StyledCard, Title, Wrapper } from './Styles';
+import { Button, Container, Form, Row, Col } from 'react-bootstrap';
+import { FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
+import { Constants } from '../../utils';
 
-const options = [
-  { value: 'id', label: 'By Id' },
-  { value: 'sample', label: 'By sample' }
-];
-
-export const Home = (props: any) => {
+export const Home = () => {
   const [data, setData] = useState<any>({});
   const [value, setValue] = useState<any>();
   const [type, setType] = useState<any>({});
+  const [cbStatus, setCBStatus] = useState<any>('default');
 
   const { testSession, dco, athlete, discipline, sport, ar, uar, dcor, aar, samples, psrs } = data;
 
+  useEffect(() => {
+    checkCouchBase();
+  }, []);
+
+  const checkCouchBase = async () => {
+    const result = await References.checkCBStatus();
+    setCBStatus(result ? 'success' : 'danger');
+  };
+
   const getTestSessionById = async () => {
     if (value) {
-      const results = await References.getTestSession(value, type?.value);
+      const results = await References.getTestSession(value, type);
       setData(results);
     } else {
       alert('Add a value into the field');
@@ -27,137 +33,149 @@ export const Home = (props: any) => {
   };
 
   return (
-    <Container>
-      <Grid fluid>
-        <Row center="md">
-          <Col xs={10} md={2}>
-            <Input onChange={(event) => setValue(event?.target?.value)} />
-          </Col>
-          <Col xs={10} md={2}>
-            <Select
-              onChange={setType}
-              defaultValue={{ value: 'id', label: 'By Id' }}
-              options={options}
-            />
-          </Col>
-          <Col xs={10} md={1}>
-            <SendButton onClick={getTestSessionById}>Send</SendButton>
-          </Col>
-        </Row>
+    <Container className="mt-3">
+      <Row className="justify-content-md-center">
+        <Col xs lg="3" className="mb-1">
+          <Form.Control
+            onChange={(event: any) => setValue(event?.target?.value)}
+            type="email"
+            placeholder="Enter test session or sample code"
+          />
+        </Col>
 
-        <br />
+        <Col md="auto" className="mb-1">
+          <Form.Select onChange={(event: any) => setType(event?.target?.value)}>
+            <option value="id">By Id</option>
+            <option value="sample">By sample code</option>
+          </Form.Select>
+        </Col>
 
-        <Row center="md">
-          {testSession && (
-            <Col xs={12} md={8}>
-              <Row>
-                <Col xs={12} sm={6} lg={4}>
-                  <Card>
-                    <Title title={testSession?.funcName}>Test Session</Title>
-                    <Content>
+        <Col xs lg="2" className="mb-1">
+          <Button variant="primary" type="submit" onClick={getTestSessionById}>
+            Submit
+          </Button>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col>
+          <Indicator color={Constants.Colors.success}>
+            <div>
+              {cbStatus === 'success' && <FiCheckCircle size={20} color="#fff" />}
+              {cbStatus === 'danger' && <FiAlertCircle size={20} color="#fff" />}
+            </div>
+            <IndicatorText>CouchBase</IndicatorText>
+          </Indicator>
+        </Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+        <Col></Col>
+      </Row>
+
+      <Row className="mt-4">
+        <Col xs={12} sm={6} lg={4}>
+          <StyledCard>
+            <Title title={testSession?.funcName}>Test Session</Title>
+            <StyledCard.Body>
+              {testSession && (
+                <StyledCard.Text>
+                  <Info
+                    name="DCO"
+                    copy={testSession?.lockedBy}
+                    value={`${dco?.fName} ${dco?.lName}`}
+                  />
+                  <Info name="Email" value={`${athlete?.email}`} />
+                  <Info name="Status" label="true" value={`${testSession?.status}`} />
+                  <Info name="Type" label="true" value={testSession?.tsType} />
+                  <Info name="Can submit?" value={testSession?.canSubmit?.toString()} />
+                  <Info name="Discipline" value={`${discipline?.name}`} />
+                  <Info name="Sport" value={`${sport?.name}`} />
+                  <Info name="Window end" value={`${testSession?.wEnd?.substring(0, 10)}`} />
+                  <Info name="Window start" value={`${testSession?.wStart?.substring(0, 10)}`} />
+                  <Info name="AR status" copy={testSession?.arId} label="true" value={ar?.status} />
+                  {uar && (
+                    <Info
+                      name="UAR status"
+                      copy={testSession?.uarId}
+                      label="true"
+                      value={`${uar?.status}`}
+                    />
+                  )}
+                  <Info
+                    name="DCOR status"
+                    copy={testSession?.dcorId}
+                    label="true"
+                    value={`${dcor?.status}`}
+                  />
+
+                  <Info
+                    name="AAR status"
+                    copy={testSession?.aarId}
+                    label="true"
+                    value={`${aar?.status}`}
+                  />
+                </StyledCard.Text>
+              )}
+            </StyledCard.Body>
+          </StyledCard>
+        </Col>
+
+        <Col xs={12} sm={6} lg={4}>
+          <StyledCard>
+            <Title title={testSession?.funcName}>DCOR Samples</Title>
+            <StyledCard.Body>
+              <StyledCard.Text>
+                {samples?.map((item: any) => {
+                  return (
+                    <Wrapper key={item?.sample?.code?.toString()}>
+                      <Info name="Type" value={item?.sample?.type?.toString()} />
                       <Info
-                        name="DCO"
-                        copy={testSession?.lockedBy}
-                        value={`${dco?.fName} ${dco?.lName}`}
+                        name="Code"
+                        copy={item?.sample?.code}
+                        value={item?.sample?.code?.toString()}
                       />
-                      <Info name="Email" value={`${athlete?.email}`} />
-                      <Info name="Status" label="true" value={`${testSession?.status}`} />
-                      <Info name="Type" label="true" value={testSession?.tsType} />
-                      <Info name="Can submit?" value={testSession?.canSubmit?.toString()} />
-                      <Info name="Discipline" value={`${discipline?.name}`} />
-                      <Info name="Sport" value={`${sport?.name}`} />
-                      <Info name="Window end" value={`${testSession?.wEnd?.substring(0, 10)}`} />
-                      <Info
-                        name="Window start"
-                        value={`${testSession?.wStart?.substring(0, 10)}`}
-                      />
-                      <Info
-                        name="AR status"
-                        copy={testSession?.arId}
-                        label="true"
-                        value={ar?.status}
-                      />
-                      {uar && (
+                      <Info name="Status" label="true" value={item?.sample?.status} />
+                      {!!item?.sample?.manifestId && (
                         <Info
-                          name="UAR status"
-                          copy={testSession?.uarId}
+                          name="Manifest Status"
+                          copy={item?.sample?.manifestId}
                           label="true"
-                          value={`${uar?.status}`}
+                          value={item?.manifest?.status}
                         />
                       )}
-                      <Info
-                        name="DCOR status"
-                        copy={testSession?.dcorId}
-                        label="true"
-                        value={`${dcor?.status}`}
-                      />
+                    </Wrapper>
+                  );
+                })}
+              </StyledCard.Text>
+            </StyledCard.Body>
+          </StyledCard>
+        </Col>
 
-                      <Info
-                        name="AAR status"
-                        copy={testSession?.aarId}
-                        label="true"
-                        value={`${aar?.status}`}
-                      />
-                    </Content>
-                  </Card>
-                </Col>
-
-                {!!samples?.length && (
-                  <Col xs={12} sm={6} lg={4}>
-                    <Card>
-                      <Title>DCOR Samples</Title>
-                      <Content>
-                        {samples.map((item: any) => {
-                          return (
-                            <Wrapper key={item?.sample?.code?.toString()}>
-                              <Info name="Type" value={item?.sample?.type?.toString()} />
-                              <Info
-                                name="Code"
-                                copy={item?.sample?.code}
-                                value={item?.sample?.code?.toString()}
-                              />
-                              <Info name="Status" label="true" value={item?.sample?.status} />
-                              {!!item?.sample?.manifestId && (
-                                <Info
-                                  name="Manifest Status"
-                                  copy={item?.sample?.manifestId}
-                                  label="true"
-                                  value={item?.manifest?.status}
-                                />
-                              )}
-                            </Wrapper>
-                          );
-                        })}
-                      </Content>
-                    </Card>
-                  </Col>
-                )}
-
-                {!!psrs?.length && (
-                  <Col xs={12} sm={6} lg={4}>
-                    <Card>
-                      <Title>Post-Supplemental Report (PSR)</Title>
-                      <Content>
-                        {psrs.map((item: any) => {
-                          return (
-                            <Wrapper key={item?.psr?.createdOn}>
-                              <Info
-                                name="Created on"
-                                value={item?.psr?.createdOn?.substring(0, 10)}
-                              />
-                              <Info name="Status" label="true" value={item?.psr?.status} />
-                            </Wrapper>
-                          );
-                        })}
-                      </Content>
-                    </Card>
-                  </Col>
-                )}
-              </Row>
-            </Col>
-          )}
-        </Row>
-      </Grid>
+        <Col xs={12} sm={6} lg={4}>
+          <StyledCard>
+            <Title title={testSession?.funcName}>Post-Supplemental Report (PSR)</Title>
+            <StyledCard.Body>
+              <StyledCard.Text>
+                {psrs?.map((item: any) => {
+                  return (
+                    <Wrapper key={item?.psr?.createdOn}>
+                      <Info name="Created on" value={item?.psr?.createdOn?.substring(0, 10)} />
+                      <Info name="Status" label="true" value={item?.psr?.status} />
+                    </Wrapper>
+                  );
+                })}
+              </StyledCard.Text>
+            </StyledCard.Body>
+          </StyledCard>
+        </Col>
+      </Row>
     </Container>
   );
 };

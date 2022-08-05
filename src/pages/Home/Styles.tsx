@@ -1,18 +1,12 @@
+import { Card } from 'react-bootstrap';
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  flex: 1;
-  height: 100%;
-  padding: 40px;
-`;
-
-export const Card = styled.div`
+export const StyledCard = styled(Card)`
   background-color: #fff;
-  border-radius: 7px;
-  margin-bottom: 20px;
+  border: 0;
 `;
 
-export const Title = styled.h3`
+export const Title = styled.h4`
   padding-top: 0;
   margin: 0;
   border-bottom: 1px solid #e6eaec;
@@ -20,41 +14,25 @@ export const Title = styled.h3`
   text-align: left;
 `;
 
-export const Content = styled.div`
-  padding: 15px;
-  text-align: left;
-  font-size: 15px;
-`;
-
 export const Wrapper = styled.div`
   border-bottom: 1px solid #e6eaec;
   padding-bottom: 10px;
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  height: 37px;
-  outline: 0;
-  border: none;
-  outline-width: 0;
-  border: 1px solid hsl(0, 0%, 80%);
-  border-radius: 3px;
-  padding-left: 7px;
-  padding-right: 7px;
-  box-sizing: border-box;
+export const Indicator = styled.div<{ color: string }>`
+  background-color: ${({ color }) => color || 'grey'};
+  height: 70px;
+  border-radius: 8px;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
 `;
 
-export const SendButton = styled.button`
-  background-color: #0cbfb6;
-  border: 0;
-  padding: 0;
-  height: 37px;
-  padding: 0 20px;
-  border-radius: 3px;
+export const IndicatorText = styled.p`
   color: #fff;
   font-weight: bold;
-  cursor: pointer;
-  &:active {
-    filter: brightness(85%);
-  }
+  font-size: 14px;
+  text-align: center;
 `;
